@@ -5,7 +5,7 @@ import TableHeader from './TableHeader';
 import TableLine from './TableLine';
 
 function Table() {
-  const { data, getPlanetsApi } = useContext(MyContext);
+  const { dataFilter, getPlanetsApi } = useContext(MyContext);
 
   useEffect(() => {
     getPlanetsApi();
@@ -17,7 +17,7 @@ function Table() {
       <table>
         <TableHeader />
         {
-          data.map((planet) => (
+          dataFilter.map((planet) => (
             <TableLine key={ planet.name } planet={ planet } />
           ))
         }
