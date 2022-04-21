@@ -6,9 +6,9 @@ import fetchPlanetsApi from '../api/planetsApi';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
+  const [dataFilter, setDataFilter] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filterByName, setFilterByName] = useState('');
-  const [dataFilter, setDataFilter] = useState([]);
 
   const getPlanetsApi = async () => {
     setLoading(true);
@@ -18,10 +18,9 @@ function Provider({ children }) {
     setLoading(false);
   };
 
-  const handleChange = ({ target }) => {
+  const handleChangeFilterName = ({ target }) => {
     const { value } = target;
     setFilterByName(value);
-    console.log(value);
 
     if (value.length === 0) {
       setDataFilter(data);
@@ -32,12 +31,26 @@ function Provider({ children }) {
     }
   };
 
+  const handleChangeFilterNumeric = ({ column, comparison, valueCompare }) => {
+    if (comparison === 'maior que') {
+      const aux = data.filter((item) => Number(item[column]) > Number(valueCompare));
+      setDataFilter(aux);
+    } else if (comparison === 'menor que') {
+      const aux = data.filter((item) => Number(item[column]) < Number(valueCompare));
+      setDataFilter(aux);
+    } else {
+      const aux = data.filter((item) => Number(item[column]) === Number(valueCompare));
+      setDataFilter(aux);
+    }
+  };
+
   const contextValue = {
+    dataFilter,
     loading,
     getPlanetsApi,
     filterByName,
-    handleChange,
-    dataFilter,
+    handleChangeFilterName,
+    handleChangeFilterNumeric,
   };
 
   return (

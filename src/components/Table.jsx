@@ -13,7 +13,6 @@ function Table() {
 
   return (
     <div>
-      <p>Tabela</p>
       <table>
         <TableHeader />
         {
