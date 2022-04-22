@@ -6,7 +6,7 @@ function FilterInputNumber() {
   const [comparison, setcomparison] = useState('maior que');
   const [valueCompare, setvalue] = useState(0);
 
-  const { handleChangeFilterNumeric } = useContext(MyContext);
+  const { handleChangeFilterNumeric, optionsValue } = useContext(MyContext);
 
   const handleChangeGeneric = ({ target }) => {
     const { name, value } = target;
@@ -31,11 +31,11 @@ function FilterInputNumber() {
           data-testid="column-filter"
           onChange={ handleChangeGeneric }
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          {
+            optionsValue.map((option) => (
+              <option key={ option.index } value={ option }>{ option }</option>
+            ))
+          }
         </select>
       </label>
       {' '}
