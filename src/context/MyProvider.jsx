@@ -9,6 +9,7 @@ function Provider({ children }) {
   const [dataFilter, setDataFilter] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filterByName, setFilterByName] = useState('');
+  const [filtersUsed, setFiltersUsed] = useState([]);
 
   const getPlanetsApi = async () => {
     setLoading(true);
@@ -32,14 +33,18 @@ function Provider({ children }) {
   };
 
   const handleChangeFilterNumeric = ({ column, comparison, valueCompare }) => {
+    setFiltersUsed((prevState) => [...prevState, { column, comparison, valueCompare }]);
     if (comparison === 'maior que') {
-      const aux = data.filter((item) => Number(item[column]) > Number(valueCompare));
+      const aux = dataFilter
+        .filter((item) => Number(item[column]) > Number(valueCompare));
       setDataFilter(aux);
     } else if (comparison === 'menor que') {
-      const aux = data.filter((item) => Number(item[column]) < Number(valueCompare));
+      const aux = dataFilter
+        .filter((item) => Number(item[column]) < Number(valueCompare));
       setDataFilter(aux);
     } else {
-      const aux = data.filter((item) => Number(item[column]) === Number(valueCompare));
+      const aux = dataFilter
+        .filter((item) => Number(item[column]) === Number(valueCompare));
       setDataFilter(aux);
     }
   };
@@ -51,6 +56,7 @@ function Provider({ children }) {
     filterByName,
     handleChangeFilterName,
     handleChangeFilterNumeric,
+    filtersUsed,
   };
 
   return (
